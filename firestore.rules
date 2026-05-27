@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =============================================
+    // Helper Functions
+    // =============================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isDocente() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.ruolo == 'docente';
+    }
+
+    function isStudente() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.ruolo == 'studente';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =============================================
+    // Collection Rules
+    // =============================================
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isDocente();
+    }
+
+    // Contenuti collection
+    match /contenuti/{documentId} {
+      allow read: if isAuthenticated();
+      allow write: if isDocente();
+    }
+
+    // Annunci collection
+    match /annunci/{documentId} {
+      allow read: if isAuthenticated();
+      allow write: if isDocente();
+    }
+
+    // Compiti collection
+    match /compiti/{documentId} {
+      allow read: if isAuthenticated();
+      allow write: if isDocente();
+    }
+
+    // Consegne collection
+    match /consegne/{documentId} {
+      allow read: if isDocente() || (isStudente() && resource.data.studenteId == request.auth.uid);
+      allow create: if isStudente();
+      allow update: if isDocente() || (isStudente() && resource.data.studenteId == request.auth.uid);
+    }
+
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pagina non trovata — InformaticaUmanistica">
+  <title>404 — Pagina non trovata | InformaticaUmanistica</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-xl);
+    }
+    .error-code {
+      font-family: var(--font-heading);
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-lg);
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .error-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      animation: fadeInUp 0.6s ease-out 0.1s backwards;
+    }
+    .error-text {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2xl);
+      max-width: 500px;
+      animation: fadeInUp 0.6s ease-out 0.2s backwards;
+    }
+    .error-emoji {
+      font-size: 4rem;
+      margin-bottom: var(--space-xl);
+      animation: float 3s ease-in-out infinite;
+    }
+    .error-actions {
+      animation: fadeInUp 0.6s ease-out 0.3s backwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="error-page">
+    <div>
+      <div class="error-emoji" aria-hidden="true">📖</div>
+      <div class="error-code">404</div>
+      <h1 class="error-title">Pagina non trovata</h1>
+      <p class="error-text">
+        Come Dante nella selva oscura, ti sei smarrito.
+        La pagina che cerchi non esiste o è stata spostata.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary btn-lg">
+          🏠 Torna alla Home
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

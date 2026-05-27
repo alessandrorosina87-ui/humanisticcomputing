@@ -1,0 +1,52 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // =============================================
+    // Helper Functions
+    // =============================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isDocente() {
+      return isAuthenticated() &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.ruolo == 'docente';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =============================================
+    // Storage Rules
+    // =============================================
+
+    // Materiali: readable by authenticated, writable by docente
+    match /materiali/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isDocente();
+    }
+
+    // Consegne: readable by owner or docente, writable by owner
+    match /consegne/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isDocente();
+      allow write: if isOwner(userId);
+    }
+
+    // Avatars: readable by authenticated, writable by owner (max 2MB, image only)
+    match /avatars/{userId}/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId)
+                   && request.resource.size < 2 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Default: deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

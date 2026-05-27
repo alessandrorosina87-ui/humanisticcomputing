@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env*
+
+# Firebase
+.firebase/
+
+# Debug logs
+*-debug.log
+
+# Backups
+backups/
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

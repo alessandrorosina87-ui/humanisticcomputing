@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="InformaticaUmanistica — Piattaforma didattica su Digital Humanities, AI e Letteratura. Scopri come l'informatica trasforma e potenzia la letteratura: dall'ipertesto all'intelligenza artificiale.">
+  <meta name="keywords" content="informatica umanistica, digital humanities, letteratura digitale, intelligenza artificiale, AI letteratura, didattica, NLP">
+  <meta name="author" content="InformaticaUmanistica">
+  <meta name="theme-color" content="#8b5cf6">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="InformaticaUmanistica — Digital Humanities, AI & Letteratura">
+  <meta property="og:description" content="Piattaforma didattica che esplora come l'informatica trasforma la letteratura. Dalla letteratura 2.0 all'AI generativa.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://informaticaumanistica-6b476.web.app">
+
+  <title>InformaticaUmanistica — Digital Humanities, AI & Letteratura</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="navbar" role="navigation" aria-label="Navigazione principale">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo" id="nav-logo">
+        <span class="logo-icon">IU</span>
+        <span>InformaticaUmanistica</span>
+      </a>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#home" class="nav-link active" data-section="home">Home</a>
+        <a href="#pilastri" class="nav-link" data-section="pilastri">Pilastri</a>
+        <a href="#timeline" class="nav-link" data-section="timeline">Timeline</a>
+        <a href="#laboratorio" class="nav-link" data-section="laboratorio">Laboratorio</a>
+        <a href="#risorse" class="nav-link" data-section="risorse">Risorse</a>
+        <a href="#auth" class="nav-link" data-section="auth">Area Utente</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="nav-theme-toggle" id="theme-toggle" title="Cambia tema" aria-label="Cambia tema chiaro/scuro">
+          🌙
+        </button>
+        <button class="nav-auth-btn" id="nav-auth-btn" onclick="scrollToSection('auth')">
+          Accedi
+        </button>
+        <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Apri menu" aria-expanded="false">
+          ☰
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Menu mobile">
+    <a href="#home" data-section="home" onclick="closeMobileMenu()">🏠 Home</a>
+    <a href="#pilastri" data-section="pilastri" onclick="closeMobileMenu()">📖 Pilastri</a>
+    <a href="#timeline" data-section="timeline" onclick="closeMobileMenu()">⏳ Timeline</a>
+    <a href="#laboratorio" data-section="laboratorio" onclick="closeMobileMenu()">🧪 Laboratorio</a>
+    <a href="#risorse" data-section="risorse" onclick="closeMobileMenu()">📚 Risorse</a>
+    <a href="#auth" data-section="auth" onclick="closeMobileMenu()">👤 Area Utente</a>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main-content">
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero section" id="home">
+      <!-- Floating decorative elements -->
+      <div class="hero-float float-1" aria-hidden="true">
+        <span>📜</span> Divina Commedia → NLP
+      </div>
+      <div class="hero-float float-2" aria-hidden="true">
+        <span>🤖</span> GPT + Petrarca
+      </div>
+      <div class="hero-float float-3" aria-hidden="true">
+        <span>📊</span> Analisi Stilometrica
+      </div>
+      <div class="hero-float float-4" aria-hidden="true">
+        <span>🌐</span> Edizioni Digitali
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          Piattaforma Didattica Interattiva
+        </div>
+
+        <h1 class="hero-title">
+          <span class="line">Quando la</span>
+          <span class="line"><span class="serif-accent gradient-text">Letteratura</span></span>
+          <span class="line">incontra l'<span class="gradient-text">AI</span></span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Esplora come l'informatica trasforma, potenzia e reinventa la letteratura.
+          Dalla filologia digitale all'intelligenza artificiale generativa:
+          un viaggio nelle <strong>Digital Humanities</strong>.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#pilastri" class="btn btn-primary btn-lg" id="hero-cta-explore">
+            🚀 Esplora il Percorso
+          </a>
+          <a href="#laboratorio" class="btn btn-secondary btn-lg" id="hero-cta-lab">
+            🧪 Prova il Laboratorio
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="stat-epochs">5</div>
+            <div class="hero-stat-label">Epoche letterarie</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="stat-tools">8+</div>
+            <div class="hero-stat-label">Strumenti interattivi</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="stat-concepts">∞</div>
+            <div class="hero-stat-label">Possibilità creative</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LITERARY QUOTE ===== -->
+    <section class="section" id="quote-section">
+      <div class="container">
+        <div class="literary-quote reveal">
+          <blockquote id="literary-quote-text">
+            Nel mezzo del cammin di nostra vita / mi ritrovai per una selva oscura, / ché la diritta via era smarrita.
+          </blockquote>
+          <cite id="literary-quote-author">— Dante Alighieri, Inferno, Canto I</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PILASTRI / FEATURES ===== -->
+    <section class="section" id="pilastri">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-icon">📖</span>
+            I Quattro Pilastri
+          </div>
+          <h2 class="section-title">
+            Dalla <span class="gradient-text">tradizione</span> all'<span class="gradient-text">innovazione</span>
+          </h2>
+          <p class="section-subtitle">
+            Quattro dimensioni in cui l'informatica incontra la letteratura, creando nuove forme di conoscenza e creatività.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <!-- Pillar 1: Letteratura 2.0 -->
+          <div class="card pillar-card reveal reveal-delay-1" id="pillar-lit20">
+            <span class="pillar-number">01</span>
+            <div class="pillar-icon card-icon purple">📱</div>
+            <h3 class="pillar-title">Letteratura 2.0</h3>
+            <p class="pillar-text">
+              L'era digitale trasforma la fruizione letteraria. E-book, audiolibri, ipertesti e
+              narrativa interattiva ridefiniscono il rapporto tra autore e lettore. Il testo diventa
+              multimediale, condivisibile, partecipativo.
+            </p>
+            <div style="margin-top: var(--space-lg);">
+              <span class="resource-tag tool">Ipertesto</span>
+              <span class="resource-tag free">E-book</span>
+              <span class="resource-tag course">Multimediale</span>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Letteratura 4.0 -->
+          <div class="card pillar-card reveal reveal-delay-2" id="pillar-lit40">
+            <span class="pillar-number">02</span>
+            <div class="pillar-icon card-icon cyan">⚡</div>
+            <h3 class="pillar-title">Letteratura 4.0</h3>
+            <p class="pillar-text">
+              Dati, algoritmi e reti neurali analizzano migliaia di testi in secondi. Stilometria
+              computazionale, distant reading e text mining svelano pattern nascosti nella
+              letteratura mondiale, invisibili all'occhio umano.
+            </p>
+            <div style="margin-top: var(--space-lg);">
+              <span class="resource-tag tool">Text Mining</span>
+              <span class="resource-tag course">Stilometria</span>
+              <span class="resource-tag book">Distant Reading</span>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Digital Humanities -->
+          <div class="card pillar-card reveal reveal-delay-3" id="pillar-dh">
+            <span class="pillar-number">03</span>
+            <div class="pillar-icon card-icon pink">🌐</div>
+            <h3 class="pillar-title">Digital Humanities</h3>
+            <p class="pillar-text">
+              La convergenza tra scienze umane e tecnologie digitali. Edizioni digitali critiche,
+              archivi TEI-XML, GIS per la geografia letteraria, network analysis per le relazioni
+              tra personaggi. Un nuovo paradigma di ricerca.
+            </p>
+            <div style="margin-top: var(--space-lg);">
+              <span class="resource-tag tool">TEI-XML</span>
+              <span class="resource-tag free">GIS</span>
+              <span class="resource-tag course">Network Analysis</span>
+            </div>
+          </div>
+
+          <!-- Pillar 4: AI & Letteratura -->
+          <div class="card pillar-card reveal reveal-delay-4" id="pillar-ai">
+            <span class="pillar-number">04</span>
+            <div class="pillar-icon card-icon amber">🤖</div>
+            <h3 class="pillar-title">AI & Letteratura</h3>
+            <p class="pillar-text">
+              L'intelligenza artificiale generativa rivoluziona la scrittura. Da GPT a modelli
+              multimodali: generazione di testi, analisi del sentiment, traduzione automatica,
+              co-creazione uomo-macchina. Una nuova era creativa.
+            </p>
+            <div style="margin-top: var(--space-lg);">
+              <span class="resource-tag tool">NLP</span>
+              <span class="resource-tag course">GPT</span>
+              <span class="resource-tag book">Sentiment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TIMELINE ===== -->
+    <section class="section" id="timeline" style="background: var(--color-bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-icon">⏳</span>
+            Cronologia
+          </div>
+          <h2 class="section-title">
+            La <span class="gradient-text">storia</span> della letteratura digitale
+          </h2>
+          <p class="section-subtitle">
+            Un viaggio attraverso le tappe fondamentali che hanno unito tecnologia e letteratura.
+          </p>
+        </div>
+
+        <div class="timeline" id="timeline-container">
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1945</div>
+              <h3 class="timeline-title">Memex di Vannevar Bush</h3>
+              <p class="timeline-text">
+                Bush immagina il Memex, un dispositivo per memorizzare e collegare informazioni.
+                Precursore dell'ipertesto e del World Wide Web.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1965</div>
+              <h3 class="timeline-title">L'ipertesto di Ted Nelson</h3>
+              <p class="timeline-text">
+                Ted Nelson conia il termine "ipertesto" nel progetto Xanadu.
+                Nasce l'idea di testi collegati in modo non lineare: la letteratura non sarà più la stessa.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1987</div>
+              <h3 class="timeline-title">Afternoon, a story — Michael Joyce</h3>
+              <p class="timeline-text">
+                La prima opera di narrativa ipertestuale significativa. Il lettore sceglie il percorso:
+                la lettura diventa un atto di navigazione e co-creazione.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2004</div>
+              <h3 class="timeline-title">Progetto Gutenberg & Open Access</h3>
+              <p class="timeline-text">
+                Il Progetto Gutenberg supera 10.000 e-book gratuiti. La letteratura diventa accessibile
+                a tutti. Nasce il concetto di biblioteca digitale universale.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2013</div>
+              <h3 class="timeline-title">Franco Moretti: Distant Reading</h3>
+              <p class="timeline-text">
+                Moretti propone il "distant reading": analizzare migliaia di testi con strumenti
+                computazionali anziché leggerli uno per uno. Rivoluzione nella critica letteraria.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2017</div>
+              <h3 class="timeline-title">Transformer & Attention Is All You Need</h3>
+              <p class="timeline-text">
+                Google pubblica il paper sui Transformer. L'architettura che renderà possibile
+                GPT, BERT e la rivoluzione dell'AI generativa applicata al linguaggio.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2022–oggi</div>
+              <h3 class="timeline-title">AI Generativa & Co-creazione</h3>
+              <p class="timeline-text">
+                ChatGPT, Gemini, Claude: l'AI diventa co-autore. Generazione di poesie, racconti,
+                analisi testuali in tempo reale. La letteratura entra nella sua fase più trasformativa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LABORATORIO INTERATTIVO ===== -->
+    <section class="section" id="laboratorio">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-icon">🧪</span>
+            Laboratorio Interattivo
+          </div>
+          <h2 class="section-title">
+            Sperimenta con il <span class="gradient-text">testo</span>
+          </h2>
+          <p class="section-subtitle">
+            Strumenti interattivi per analizzare testi letterari. Incolla un brano e scopri
+            cosa nascondono le parole attraverso algoritmi e visualizzazioni.
+          </p>
+        </div>
+
+        <div class="lab-workspace reveal" id="lab-workspace">
+          <!-- Mac-style toolbar -->
+          <div class="lab-toolbar">
+            <span class="lab-toolbar-dot red"></span>
+            <span class="lab-toolbar-dot yellow"></span>
+            <span class="lab-toolbar-dot green"></span>
+            <span class="lab-toolbar-title">laboratorio_interattivo.js — InformaticaUmanistica</span>
+          </div>
+
+          <!-- Tabs -->
+          <div class="lab-tabs" role="tablist" aria-label="Strumenti del laboratorio">
+            <button class="lab-tab active" data-tab="analyzer" role="tab" id="tab-analyzer" aria-selected="true">📊 Analisi Testo</button>
+            <button class="lab-tab" data-tab="wordcloud" role="tab" id="tab-wordcloud" aria-selected="false">☁️ Word Cloud</button>
+            <button class="lab-tab" data-tab="readability" role="tab" id="tab-readability" aria-selected="false">📐 Leggibilità</button>
+            <button class="lab-tab" data-tab="comparison" role="tab" id="tab-comparison" aria-selected="false">⚖️ Confronta</button>
+            <button class="lab-tab" data-tab="sentiment" role="tab" id="tab-sentiment" aria-selected="false">💬 Sentiment</button>
+          </div>
+
+          <!-- Lab Body -->
+          <div class="lab-body">
+
+            <!-- Panel: Text Analyzer -->
+            <div class="lab-panel active" id="panel-analyzer" role="tabpanel" aria-labelledby="tab-analyzer">
+              <div class="lab-input-group">
+                <label class="lab-label" for="analyzer-input">Inserisci o incolla un testo letterario</label>
+                <textarea class="lab-textarea" id="analyzer-input" placeholder="Esempio: Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura!"></textarea>
+              </div>
+              <button class="btn btn-primary" id="btn-analyze" onclick="analyzeText()">
+                ⚡ Analizza
+              </button>
+              <div class="lab-results" id="analyzer-results" style="margin-top: var(--space-xl);">
+                <p class="lab-results-title">📊 Risultati</p>
+                <p style="color: var(--color-text-tertiary); font-style: italic;">Inserisci un testo e premi "Analizza" per vedere i risultati.</p>
+              </div>
+            </div>
+
+            <!-- Panel: Word Cloud -->
+            <div class="lab-panel" id="panel-wordcloud" role="tabpanel" aria-labelledby="tab-wordcloud">
+              <div class="lab-input-group">
+                <label class="lab-label" for="wordcloud-input">Testo per la Word Cloud</label>
+                <textarea class="lab-textarea" id="wordcloud-input" placeholder="Incolla qui un brano di prosa o poesia..."></textarea>
+              </div>
+              <button class="btn btn-primary" id="btn-wordcloud" onclick="generateWordCloud()">
+                ☁️ Genera Word Cloud
+              </button>
+              <div class="lab-results" id="wordcloud-results" style="margin-top: var(--space-xl);">
+                <p class="lab-results-title">☁️ Word Cloud</p>
+                <div class="word-cloud" id="word-cloud-container">
+                  <p style="color: var(--color-text-tertiary); font-style: italic;">La word cloud apparirà qui.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel: Readability -->
+            <div class="lab-panel" id="panel-readability" role="tabpanel" aria-labelledby="tab-readability">
+              <div class="lab-input-group">
+                <label class="lab-label" for="readability-input">Testo per l'analisi di leggibilità</label>
+                <textarea class="lab-textarea" id="readability-input" placeholder="Incolla qui un testo per calcolarne la leggibilità (indice Gulpease)..."></textarea>
+              </div>
+              <button class="btn btn-primary" id="btn-readability" onclick="analyzeReadability()">
+                📐 Calcola Leggibilità
+              </button>
+              <div class="lab-results" id="readability-results" style="margin-top: var(--space-xl);">
+                <p class="lab-results-title">📐 Indice di Leggibilità</p>
+                <p style="color: var(--color-text-tertiary); font-style: italic;">Inserisci un testo per calcolarne l'indice Gulpease.</p>
+              </div>
+            </div>
+
+            <!-- Panel: Comparison -->
+            <div class="lab-panel" id="panel-comparison" role="tabpanel" aria-labelledby="tab-comparison">
+              <div class="comparison-view">
+                <div class="comparison-col">
+                  <p class="comparison-col-title">📜 Testo A</p>
+                  <textarea class="lab-textarea" id="comparison-input-a" placeholder="Primo testo da confrontare..." style="min-height: 120px;"></textarea>
+                </div>
+                <div class="comparison-col">
+                  <p class="comparison-col-title">📄 Testo B</p>
+                  <textarea class="lab-textarea" id="comparison-input-b" placeholder="Secondo testo da confrontare..." style="min-height: 120px;"></textarea>
+                </div>
+              </div>
+              <div style="margin-top: var(--space-xl); text-align: center;">
+                <button class="btn btn-primary" id="btn-compare" onclick="compareTexts()">
+                  ⚖️ Confronta
+                </button>
+              </div>
+              <div class="lab-results" id="comparison-results" style="margin-top: var(--space-xl);">
+                <p class="lab-results-title">⚖️ Risultati Confronto</p>
+                <p style="color: var(--color-text-tertiary); font-style: italic;">Inserisci due testi per confrontarli.</p>
+              </div>
+            </div>
+
+            <!-- Panel: Sentiment -->
+            <div class="lab-panel" id="panel-sentiment" role="tabpanel" aria-labelledby="tab-sentiment">
+              <div class="lab-input-group">
+                <label class="lab-label" for="sentiment-input">Testo per l'analisi del sentiment</label>
+                <textarea class="lab-textarea" id="sentiment-input" placeholder="Inserisci un testo per analizzarne il tono emotivo (positivo, negativo, neutro)..."></textarea>
+              </div>
+              <button class="btn btn-primary" id="btn-sentiment" onclick="analyzeSentiment()">
+                💬 Analizza Sentiment
+              </button>
+              <div class="lab-results" id="sentiment-results" style="margin-top: var(--space-xl);">
+                <p class="lab-results-title">💬 Analisi del Sentiment</p>
+                <p style="color: var(--color-text-tertiary); font-style: italic;">Inserisci un testo per analizzare il sentiment.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RISORSE ===== -->
+    <section class="section" id="risorse" style="background: var(--color-bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-icon">📚</span>
+            Risorse & Strumenti
+          </div>
+          <h2 class="section-title">
+            Approfondisci le <span class="gradient-text">Digital Humanities</span>
+          </h2>
+          <p class="section-subtitle">
+            Una selezione curata di strumenti, corsi e risorse per esplorare il mondo dell'informatica umanistica.
+          </p>
+        </div>
+
+        <div class="resource-grid">
+          <a href="https://voyant-tools.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-1" id="resource-voyant">
+            <div class="resource-icon card-icon purple">🔍</div>
+            <div class="resource-info">
+              <h4>Voyant Tools</h4>
+              <p>Ambiente web per l'analisi testuale. Word clouds, frequenze, concordanze e grafici interattivi.</p>
+              <span class="resource-tag free">Gratuito</span>
+              <span class="resource-tag tool">Strumento</span>
+            </div>
+          </a>
+
+          <a href="https://www.gutenberg.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-2" id="resource-gutenberg">
+            <div class="resource-icon card-icon cyan">📚</div>
+            <div class="resource-info">
+              <h4>Project Gutenberg</h4>
+              <p>Oltre 70.000 e-book gratuiti. Classici della letteratura mondiale in formato digitale.</p>
+              <span class="resource-tag free">Gratuito</span>
+              <span class="resource-tag book">Biblioteca</span>
+            </div>
+          </a>
+
+          <a href="https://www.tei-c.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-3" id="resource-tei">
+            <div class="resource-icon card-icon pink">📝</div>
+            <div class="resource-info">
+              <h4>TEI — Text Encoding Initiative</h4>
+              <p>Standard XML per la codifica di testi umanistici. Fondamentale per edizioni digitali critiche.</p>
+              <span class="resource-tag tool">Standard</span>
+              <span class="resource-tag free">Open Source</span>
+            </div>
+          </a>
+
+          <a href="https://huggingface.co/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-4" id="resource-huggingface">
+            <div class="resource-icon card-icon amber">🤗</div>
+            <div class="resource-info">
+              <h4>Hugging Face</h4>
+              <p>Piattaforma per modelli AI. NLP, analisi del sentiment, traduzione e generazione testuale.</p>
+              <span class="resource-tag free">Freemium</span>
+              <span class="resource-tag tool">AI/ML</span>
+            </div>
+          </a>
+
+          <a href="https://www.zotero.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-1" id="resource-zotero">
+            <div class="resource-icon card-icon green">📋</div>
+            <div class="resource-info">
+              <h4>Zotero</h4>
+              <p>Gestore di bibliografie e riferimenti. Ideale per organizzare fonti di ricerca in ambito umanistico.</p>
+              <span class="resource-tag free">Gratuito</span>
+              <span class="resource-tag tool">Strumento</span>
+            </div>
+          </a>
+
+          <a href="https://gephi.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-2" id="resource-gephi">
+            <div class="resource-icon card-icon purple">🕸️</div>
+            <div class="resource-info">
+              <h4>Gephi</h4>
+              <p>Visualizzazione e analisi di reti. Ideale per network analysis di relazioni tra personaggi letterari.</p>
+              <span class="resource-tag free">Open Source</span>
+              <span class="resource-tag tool">Visualizzazione</span>
+            </div>
+          </a>
+
+          <a href="https://www.dariah.eu/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-3" id="resource-dariah">
+            <div class="resource-icon card-icon cyan">🏛️</div>
+            <div class="resource-info">
+              <h4>DARIAH-EU</h4>
+              <p>Infrastruttura europea per le Digital Humanities. Community, tools e risorse per ricercatori.</p>
+              <span class="resource-tag course">Community</span>
+              <span class="resource-tag free">Gratuito</span>
+            </div>
+          </a>
+
+          <a href="https://programminghistorian.org/" target="_blank" rel="noopener" class="resource-card reveal reveal-delay-4" id="resource-proghistorian">
+            <div class="resource-icon card-icon pink">💻</div>
+            <div class="resource-info">
+              <h4>Programming Historian</h4>
+              <p>Tutorial peer-reviewed per Digital Humanities. Python, R, GIS, text mining e molto altro.</p>
+              <span class="resource-tag free">Gratuito</span>
+              <span class="resource-tag course">Tutorial</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AREA UTENTE / AUTH ===== -->
+    <section class="section" id="auth">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-icon">👤</span>
+            Area Utente
+          </div>
+          <h2 class="section-title">
+            Accedi alla <span class="gradient-text">piattaforma</span>
+          </h2>
+          <p class="section-subtitle">
+            Docenti e studenti possono accedere per salvare le proprie analisi, condividere materiali e monitorare i progressi.
+          </p>
+        </div>
+
+        <!-- Login Form (shown when not logged in) -->
+        <div class="auth-container" id="auth-login-container">
+          <div class="auth-card reveal">
+            <div class="auth-header">
+              <h2>Benvenuto</h2>
+              <p>Accedi con email o con Google</p>
+            </div>
+
+            <div class="auth-message" id="auth-message"></div>
+
+            <form class="auth-form" id="login-form" onsubmit="handleLogin(event)">
+              <div class="form-group">
+                <label class="form-label" for="login-email">Email</label>
+                <input class="form-input" type="email" id="login-email" placeholder="nome@scuola.it" required autocomplete="email">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="login-password">Password</label>
+                <input class="form-input" type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+              </div>
+              <button type="submit" class="btn btn-primary" id="btn-login" style="width: 100%;">
+                Accedi
+              </button>
+            </form>
+
+            <div class="auth-divider">
+              <span>oppure</span>
+            </div>
+
+            <button class="btn-google" id="btn-google-login" onclick="handleGoogleLogin()">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Accedi con Google
+            </button>
+
+            <p class="auth-toggle">
+              Non hai un account? <a href="#" id="toggle-register" onclick="toggleAuthMode(event)">Registrati</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Register Form (hidden by default) -->
+        <div class="auth-container" id="auth-register-container" style="display: none;">
+          <div class="auth-card reveal">
+            <div class="auth-header">
+              <h2>Registrazione</h2>
+              <p>Crea il tuo account</p>
+            </div>
+
+            <div class="auth-message" id="register-message"></div>
+
+            <form class="auth-form" id="register-form" onsubmit="handleRegister(event)">
+              <div class="form-group">
+                <label class="form-label" for="register-name">Nome completo</label>
+                <input class="form-input" type="text" id="register-name" placeholder="Mario Rossi" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="register-email">Email</label>
+                <input class="form-input" type="email" id="register-email" placeholder="nome@scuola.it" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="register-password">Password</label>
+                <input class="form-input" type="password" id="register-password" placeholder="Minimo 6 caratteri" required minlength="6">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="register-role">Ruolo</label>
+                <select class="form-select" id="register-role" required>
+                  <option value="" disabled selected>Seleziona il tuo ruolo</option>
+                  <option value="studente">👩‍🎓 Studente</option>
+                  <option value="docente">👨‍🏫 Docente</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btn-register" style="width: 100%;">
+                Crea Account
+              </button>
+            </form>
+
+            <div class="auth-divider">
+              <span>oppure</span>
+            </div>
+
+            <button class="btn-google" id="btn-google-register" onclick="handleGoogleLogin()">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Registrati con Google
+            </button>
+
+            <p class="auth-toggle">
+              Hai già un account? <a href="#" id="toggle-login" onclick="toggleAuthMode(event)">Accedi</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- User Dashboard (shown when logged in) -->
+        <div class="user-dashboard" id="user-dashboard">
+          <div class="auth-container" style="max-width: 600px;">
+            <div class="user-info reveal" id="user-info-card">
+              <div class="user-avatar" id="user-avatar">U</div>
+              <div class="user-details" style="flex: 1;">
+                <h3 id="user-display-name">Utente</h3>
+                <p id="user-email-display">email@example.com</p>
+              </div>
+              <span class="role-badge" id="user-role-badge">Utente</span>
+            </div>
+
+            <div class="card-grid card-grid-2 reveal" style="margin-bottom: var(--space-xl);">
+              <div class="card" style="text-align: center;">
+                <div style="font-size: var(--text-3xl); margin-bottom: var(--space-sm);">📊</div>
+                <div class="card-title" id="dashboard-analyses-count">0</div>
+                <div class="card-text">Analisi effettuate</div>
+              </div>
+              <div class="card" style="text-align: center;">
+                <div style="font-size: var(--text-3xl); margin-bottom: var(--space-sm);">📅</div>
+                <div class="card-title" id="dashboard-last-access">Mai</div>
+                <div class="card-text">Ultimo accesso</div>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary" id="btn-logout" onclick="handleLogout()" style="width: 100%;">
+              🚪 Esci dall'account
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">
+            <span class="logo-icon" style="width: 28px; height: 28px; font-size: var(--text-sm); border-radius: var(--radius-sm); background: var(--gradient-primary); display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: 800;">IU</span>
+            InformaticaUmanistica
+          </div>
+          <p>
+            Piattaforma didattica che esplora l'intersezione tra informatica, letteratura e intelligenza artificiale.
+            Un progetto per le Digital Humanities.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Percorso</h4>
+          <a href="#pilastri">Letteratura 2.0</a>
+          <a href="#pilastri">Letteratura 4.0</a>
+          <a href="#pilastri">Digital Humanities</a>
+          <a href="#pilastri">AI & Letteratura</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Strumenti</h4>
+          <a href="#laboratorio">Analisi Testo</a>
+          <a href="#laboratorio">Word Cloud</a>
+          <a href="#laboratorio">Leggibilità</a>
+          <a href="#laboratorio">Sentiment</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Progetto</h4>
+          <a href="https://github.com/alessandrorosina87-ui/InformaticaUmanistica" target="_blank" rel="noopener">GitHub</a>
+          <a href="#risorse">Risorse</a>
+          <a href="#auth">Area Utente</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 InformaticaUmanistica — Progetto Didattico Digital Humanities</p>
+        <div class="footer-bottom-links">
+          <a href="https://github.com/alessandrorosina87-ui/InformaticaUmanistica" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top-btn" aria-label="Torna in alto" onclick="scrollToTop()">↑</button>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <!-- Firebase SDK (modular, from CDN) -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script src="js/lab.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
