@@ -27,12 +27,12 @@ import { getStorage, connectStorageEmulator } from 'https://www.gstatic.com/fire
 // ============================================================
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",              // ← Da inserire
+  apiKey: "AIzaSyDHJaoer9XBFv8zTuzB3y3v9R0J1kSupoQ",              // ← Da inserire
   authDomain: "humanisticcomputing.firebaseapp.com",
   projectId: "humanisticcomputing",
   storageBucket: "humanisticcomputing.firebasestorage.app",
   messagingSenderId: "523520850922",
-  appId: "YOUR_APP_ID_HERE",               // ← Da inserire
+  appId: "1:378948319724:web:c6f99f39e1697efa2528c9",               // ← Da inserire
 };
 
 // ============================================================

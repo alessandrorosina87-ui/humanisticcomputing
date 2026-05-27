@@ -421,15 +421,22 @@
 
             <!-- Panel: Comparison -->
             <div class="lab-panel" id="panel-comparison" role="tabpanel" aria-labelledby="tab-comparison">
-              <div class="comparison-view">
-                <div class="comparison-col">
-                  <p class="comparison-col-title">📜 Testo A</p>
-                  <textarea class="lab-textarea" id="comparison-input-a" placeholder="Primo testo da confrontare..." style="min-height: 120px;"></textarea>
-                </div>
-                <div class="comparison-col">
-                  <p class="comparison-col-title">📄 Testo B</p>
-                  <textarea class="lab-textarea" id="comparison-input-b" placeholder="Secondo testo da confrontare..." style="min-height: 120px;"></textarea>
-                </div>
+              <div class="lab-input-group" style="text-align: center; margin-bottom: var(--space-lg);">
+                <label class="lab-label" for="comparison-count">Numero di testi da confrontare:</label>
+                <select id="comparison-count" class="form-select" style="width: 200px; margin: 0 auto; background-color: var(--color-bg-tertiary);" onchange="updateComparisonInputs()">
+                  <option value="2" selected>2 Testi</option>
+                  <option value="3">3 Testi</option>
+                  <option value="4">4 Testi</option>
+                  <option value="5">5 Testi</option>
+                  <option value="6">6 Testi</option>
+                  <option value="7">7 Testi</option>
+                  <option value="8">8 Testi</option>
+                  <option value="9">9 Testi</option>
+                  <option value="10">10 Testi</option>
+                </select>
+              </div>
+              <div class="comparison-view" id="comparison-inputs-container" style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <!-- I textareas verranno generati dinamicamente via JS -->
               </div>
               <div style="margin-top: var(--space-xl); text-align: center;">
                 <button class="btn btn-primary" id="btn-compare" onclick="compareTexts()">

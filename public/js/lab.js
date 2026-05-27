@@ -413,93 +413,138 @@ function analyzeReadability() {
 }
 
 /**
- * 4. CONFRONTO TRA DUE TESTI
+ * 4. CONFRONTO TRA PIÙ TESTI
  */
+function updateComparisonInputs() {
+  const count = parseInt(document.getElementById('comparison-count').value, 10);
+  const container = document.getElementById('comparison-inputs-container');
+  let html = '';
+
+  for (let i = 1; i <= count; i++) {
+    const letter = String.fromCharCode(64 + i); // A, B, C...
+    html += \`
+      <div class="comparison-col" style="display: flex; flex-direction: column;">
+        <p class="comparison-col-title">📜 Testo \${letter}</p>
+        <textarea class="lab-textarea" id="comparison-input-\${i}" placeholder="Testo \${letter} da confrontare..." style="min-height: 120px; flex-grow: 1;"></textarea>
+      </div>
+    \`;
+  }
+  container.innerHTML = html;
+}
+
+// Inizializza i campi al caricamento
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('comparison-inputs-container');
+  if (container) updateComparisonInputs();
+});
+
 function compareTexts() {
-  const inputA = document.getElementById('comparison-input-a').value.trim();
-  const inputB = document.getElementById('comparison-input-b').value.trim();
+  const count = parseInt(document.getElementById('comparison-count').value, 10);
   const results = document.getElementById('comparison-results');
 
-  if (!inputA || !inputB) {
-    results.innerHTML = '<p style="color: var(--color-pink);">⚠️ Inserisci entrambi i testi da confrontare.</p>';
-    return;
+  const texts = [];
+  for (let i = 1; i <= count; i++) {
+    const val = document.getElementById(\`comparison-input-\${i}\`).value.trim();
+    if (!val) {
+      results.innerHTML = '<p style="color: var(--color-pink);">⚠️ Inserisci tutti i testi da confrontare (oppure riduci il numero dal menu a tendina).</p>';
+      return;
+    }
+    texts.push({
+      label: String.fromCharCode(64 + i),
+      raw: val,
+      tokens: tokenize(val)
+    });
   }
 
-  const tokensA = tokenize(inputA);
-  const tokensB = tokenize(inputB);
-  const contentA = removeStopwords(tokensA);
-  const contentB = removeStopwords(tokensB);
+  // Pre-calcola statistiche per ogni testo
+  texts.forEach(t => {
+    t.content = removeStopwords(t.tokens);
+    t.unique = new Set(t.tokens);
+    t.ttr = typeTokenRatio(t.tokens);
+    t.avgLen = avgWordLength(t.tokens);
 
-  const uniqueA = new Set(tokensA);
-  const uniqueB = new Set(tokensB);
+    // Genera Cloud (Cirrus) HTML
+    const freq = wordFrequency(t.content).slice(0, 35);
+    const maxFreq = freq.length > 0 ? freq[0][1] : 1;
+    const colors = ['var(--color-primary-light)', 'var(--color-accent)', 'var(--color-cyan)', 'var(--color-pink)', 'var(--color-amber)'];
+    
+    t.cloudHtml = freq.map(([w, c], i) => {
+      const scale = Math.max(0.7, (c / maxFreq) * 2.5);
+      const fontSize = Math.max(10, Math.min(32, scale * 12));
+      const color = colors[i % colors.length];
+      const opacity = Math.max(0.6, c / maxFreq);
+      return \`<span style="font-size: \${fontSize}px; color: \${color}; opacity: \${opacity}; margin: 2px 4px; display: inline-block;">\${w}</span>\`;
+    }).join('');
+  });
 
-  // Jaccard similarity
-  const intersection = new Set([...uniqueA].filter(x => uniqueB.has(x)));
-  const union = new Set([...uniqueA, ...uniqueB]);
-  const jaccard = (intersection.size / union.size).toFixed(3);
+  // Jaccard similarity (Media di tutte le coppie se > 2)
+  let sumJaccard = 0;
+  let pairs = 0;
+  for(let i=0; i<texts.length; i++) {
+    for(let j=i+1; j<texts.length; j++) {
+      const intersection = new Set([...texts[i].unique].filter(x => texts[j].unique.has(x)));
+      const union = new Set([...texts[i].unique, ...texts[j].unique]);
+      sumJaccard += (intersection.size / union.size);
+      pairs++;
+    }
+  }
+  const avgJaccard = (sumJaccard / pairs).toFixed(3);
 
-  // Shared vocabulary
-  const sharedWords = [...intersection].filter(w => !STOPWORDS_IT.has(w)).slice(0, 20);
+  // Vocabolario condiviso tra TUTTI i testi
+  let sharedWordsSet = new Set([...texts[0].unique]);
+  for(let i=1; i<texts.length; i++) {
+    sharedWordsSet = new Set([...sharedWordsSet].filter(x => texts[i].unique.has(x)));
+  }
+  const sharedWords = [...sharedWordsSet].filter(w => !STOPWORDS_IT.has(w)).slice(0, 20);
 
-  // Exclusive words
-  const exclusiveA = [...uniqueA].filter(w => !uniqueB.has(w) && !STOPWORDS_IT.has(w)).slice(0, 10);
-  const exclusiveB = [...uniqueB].filter(w => !uniqueA.has(w) && !STOPWORDS_IT.has(w)).slice(0, 10);
+  // HTML Reports
+  let reportsHtml = \`<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">\`;
+  
+  texts.forEach(t => {
+    reportsHtml += \`
+    <div style="background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); color: var(--color-primary-light); font-size: var(--text-lg);">📜 Testo \${t.label}</h4>
+      <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-md);">
+        Parole: <strong>\${t.tokens.length}</strong> | Uniche: <strong>\${t.unique.size}</strong><br>
+        TTR: <strong>\${t.ttr}</strong> | Lung. media: <strong>\${t.avgLen}</strong>
+      </p>
+      <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-md); margin-top: var(--space-md);">
+        <h5 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-tertiary); margin-bottom: var(--space-sm);">☁️ Cirrus Word Cloud</h5>
+        <div style="text-align: center; line-height: 1.3; background: rgba(0,0,0,0.2); padding: var(--space-md); border-radius: var(--radius-md); min-height: 150px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
+          \${t.cloudHtml || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">Testo insufficiente</span>'}
+        </div>
+      </div>
+    </div>
+    \`;
+  });
+  reportsHtml += \`</div>\`;
 
-  const ttrA = typeTokenRatio(tokensA);
-  const ttrB = typeTokenRatio(tokensB);
-  const avgLenA = avgWordLength(tokensA);
-  const avgLenB = avgWordLength(tokensB);
-
-  results.innerHTML = `
-    <p class="lab-results-title">⚖️ Risultati del Confronto</p>
+  results.innerHTML = \`
+    <p class="lab-results-title">⚖️ Risultati del Confronto (\${count} testi)</p>
 
     <div style="text-align: center; margin: var(--space-xl) 0;">
       <div style="font-size: var(--text-4xl); font-weight: 900; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-        ${(jaccard * 100).toFixed(1)}%
+        \${(avgJaccard * 100).toFixed(1)}%
       </div>
-      <div style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Similarità di Jaccard</div>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-xl);">
-      <div>
-        <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md); color: var(--color-primary-light);">📜 Testo A</h4>
-        <p style="font-size: var(--text-sm); color: var(--color-text-secondary);">
-          Parole: <strong>${tokensA.length}</strong> | Uniche: <strong>${uniqueA.size}</strong><br>
-          TTR: <strong>${ttrA}</strong> | Lung. media: <strong>${avgLenA}</strong>
-        </p>
-      </div>
-      <div>
-        <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md); color: var(--color-accent);">📄 Testo B</h4>
-        <p style="font-size: var(--text-sm); color: var(--color-text-secondary);">
-          Parole: <strong>${tokensB.length}</strong> | Uniche: <strong>${uniqueB.size}</strong><br>
-          TTR: <strong>${ttrB}</strong> | Lung. media: <strong>${avgLenB}</strong>
-        </p>
+      <div style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Similarità di Jaccard (Media)</div>
+      
+      <div style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--color-text-secondary); max-width: 650px; margin-left: auto; margin-right: auto; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: rgba(139, 92, 246, 0.05); text-align: left; line-height: 1.5;">
+        <strong>ℹ️ Cos'è questo valore?</strong><br>
+        L'indice di Jaccard, noto anche come coefficiente di similarità di Jaccard (originariamente denominato <em>coefficient de communauté</em> da Paul Jaccard), è un indice statistico utilizzato per confrontare la similarità e la diversità di insiemi campionari. 
+        \${count > 2 ? 'In questo caso, viene mostrata la similarità media tra tutte le possibili coppie di testi analizzati.' : ''}
       </div>
     </div>
 
-    ${sharedWords.length > 0 ? `
-    <div style="margin-bottom: var(--space-xl);">
-      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm);">🤝 Vocabolario condiviso</h4>
+    \${reportsHtml}
+
+    \${sharedWords.length > 0 ? \`
+    <div style="margin-bottom: var(--space-xl); background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">🤝 Vocabolario condiviso (presente in tutti i testi)</h4>
       <div style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-        ${sharedWords.map(w => `<span class="resource-tag tool">${w}</span>`).join('')}
+        \${sharedWords.map(w => \`<span class="resource-tag tool">\${w}</span>\`).join('')}
       </div>
-    </div>` : ''}
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl);">
-      <div>
-        <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); font-size: var(--text-sm);">Solo in Testo A</h4>
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-          ${exclusiveA.map(w => `<span class="resource-tag course">${w}</span>`).join('') || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">-</span>'}
-        </div>
-      </div>
-      <div>
-        <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); font-size: var(--text-sm);">Solo in Testo B</h4>
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-          ${exclusiveB.map(w => `<span class="resource-tag book">${w}</span>`).join('') || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">-</span>'}
-        </div>
-      </div>
-    </div>
-  `;
+    </div>\` : ''}
+  \`;
 }
 
 /**
