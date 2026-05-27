@@ -422,12 +422,12 @@ function updateComparisonInputs() {
 
   for (let i = 1; i <= count; i++) {
     const letter = String.fromCharCode(64 + i); // A, B, C...
-    html += \`
+    html += `
       <div class="comparison-col" style="display: flex; flex-direction: column;">
-        <p class="comparison-col-title">📜 Testo \${letter}</p>
-        <textarea class="lab-textarea" id="comparison-input-\${i}" placeholder="Testo \${letter} da confrontare..." style="min-height: 120px; flex-grow: 1;"></textarea>
+        <p class="comparison-col-title">📜 Testo ${letter}</p>
+        <textarea class="lab-textarea" id="comparison-input-${i}" placeholder="Testo ${letter} da confrontare..." style="min-height: 120px; flex-grow: 1;"></textarea>
       </div>
-    \`;
+    `;
   }
   container.innerHTML = html;
 }
@@ -444,7 +444,7 @@ function compareTexts() {
 
   const texts = [];
   for (let i = 1; i <= count; i++) {
-    const val = document.getElementById(\`comparison-input-\${i}\`).value.trim();
+    const val = document.getElementById(`comparison-input-${i}`).value.trim();
     if (!val) {
       results.innerHTML = '<p style="color: var(--color-pink);">⚠️ Inserisci tutti i testi da confrontare (oppure riduci il numero dal menu a tendina).</p>';
       return;
@@ -473,7 +473,7 @@ function compareTexts() {
       const fontSize = Math.max(10, Math.min(32, scale * 12));
       const color = colors[i % colors.length];
       const opacity = Math.max(0.6, c / maxFreq);
-      return \`<span style="font-size: \${fontSize}px; color: \${color}; opacity: \${opacity}; margin: 2px 4px; display: inline-block;">\${w}</span>\`;
+      return `<span style="font-size: ${fontSize}px; color: ${color}; opacity: ${opacity}; margin: 2px 4px; display: inline-block;">${w}</span>`;
     }).join('');
   });
 
@@ -498,53 +498,53 @@ function compareTexts() {
   const sharedWords = [...sharedWordsSet].filter(w => !STOPWORDS_IT.has(w)).slice(0, 20);
 
   // HTML Reports
-  let reportsHtml = \`<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">\`;
+  let reportsHtml = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">`;
   
   texts.forEach(t => {
-    reportsHtml += \`
+    reportsHtml += `
     <div style="background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); color: var(--color-primary-light); font-size: var(--text-lg);">📜 Testo \${t.label}</h4>
+      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); color: var(--color-primary-light); font-size: var(--text-lg);">📜 Testo ${t.label}</h4>
       <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-md);">
-        Parole: <strong>\${t.tokens.length}</strong> | Uniche: <strong>\${t.unique.size}</strong><br>
-        TTR: <strong>\${t.ttr}</strong> | Lung. media: <strong>\${t.avgLen}</strong>
+        Parole: <strong>${t.tokens.length}</strong> | Uniche: <strong>${t.unique.size}</strong><br>
+        TTR: <strong>${t.ttr}</strong> | Lung. media: <strong>${t.avgLen}</strong>
       </p>
       <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-md); margin-top: var(--space-md);">
         <h5 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-tertiary); margin-bottom: var(--space-sm);">☁️ Cirrus Word Cloud</h5>
         <div style="text-align: center; line-height: 1.3; background: rgba(0,0,0,0.2); padding: var(--space-md); border-radius: var(--radius-md); min-height: 150px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
-          \${t.cloudHtml || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">Testo insufficiente</span>'}
+          ${t.cloudHtml || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">Testo insufficiente</span>'}
         </div>
       </div>
     </div>
-    \`;
+    `;
   });
-  reportsHtml += \`</div>\`;
+  reportsHtml += `</div>`;
 
-  results.innerHTML = \`
-    <p class="lab-results-title">⚖️ Risultati del Confronto (\${count} testi)</p>
+  results.innerHTML = `
+    <p class="lab-results-title">⚖️ Risultati del Confronto (${count} testi)</p>
 
     <div style="text-align: center; margin: var(--space-xl) 0;">
       <div style="font-size: var(--text-4xl); font-weight: 900; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-        \${(avgJaccard * 100).toFixed(1)}%
+        ${(avgJaccard * 100).toFixed(1)}%
       </div>
       <div style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Similarità di Jaccard (Media)</div>
       
       <div style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--color-text-secondary); max-width: 650px; margin-left: auto; margin-right: auto; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: rgba(139, 92, 246, 0.05); text-align: left; line-height: 1.5;">
         <strong>ℹ️ Cos'è questo valore?</strong><br>
         L'indice di Jaccard, noto anche come coefficiente di similarità di Jaccard (originariamente denominato <em>coefficient de communauté</em> da Paul Jaccard), è un indice statistico utilizzato per confrontare la similarità e la diversità di insiemi campionari. 
-        \${count > 2 ? 'In questo caso, viene mostrata la similarità media tra tutte le possibili coppie di testi analizzati.' : ''}
+        ${count > 2 ? 'In questo caso, viene mostrata la similarità media tra tutte le possibili coppie di testi analizzati.' : ''}
       </div>
     </div>
 
-    \${reportsHtml}
+    ${reportsHtml}
 
-    \${sharedWords.length > 0 ? \`
+    ${sharedWords.length > 0 ? `
     <div style="margin-bottom: var(--space-xl); background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
       <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">🤝 Vocabolario condiviso (presente in tutti i testi)</h4>
       <div style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-        \${sharedWords.map(w => \`<span class="resource-tag tool">\${w}</span>\`).join('')}
+        ${sharedWords.map(w => `<span class="resource-tag tool">${w}</span>`).join('')}
       </div>
-    </div>\` : ''}
-  \`;
+    </div>` : ''}
+  `;
 }
 
 /**
