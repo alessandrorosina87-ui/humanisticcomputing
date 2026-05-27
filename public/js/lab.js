@@ -462,6 +462,27 @@ function compareTexts() {
     t.unique = new Set(t.tokens);
     t.ttr = typeTokenRatio(t.tokens);
     t.avgLen = avgWordLength(t.tokens);
+    
+    // Nuovi indici: Frasi, Gulpease, Hapax
+    t.sentences = countSentences(t.raw);
+    const totalLetters = t.tokens.join('').length;
+    t.gulpease = t.tokens.length > 0 ? Math.max(0, Math.min(100, Math.round(89 + ((300 * t.sentences) - (10 * totalLetters)) / t.tokens.length))) : 0;
+    
+    if (t.gulpease >= 80) {
+      t.gulpLevel = 'Molto facile';
+      t.gulpColor = 'var(--color-accent)';
+    } else if (t.gulpease >= 60) {
+      t.gulpLevel = 'Facile';
+      t.gulpColor = 'var(--color-cyan)';
+    } else if (t.gulpease >= 40) {
+      t.gulpLevel = 'Medio';
+      t.gulpColor = 'var(--color-amber)';
+    } else {
+      t.gulpLevel = 'Difficile';
+      t.gulpColor = 'var(--color-pink)';
+    }
+
+    t.hapax = hapaxLegomena(t.tokens).length;
 
     // Genera Cloud (Cirrus) HTML
     const freq = wordFrequency(t.content).slice(0, 35);
@@ -497,20 +518,44 @@ function compareTexts() {
   }
   const sharedWords = [...sharedWordsSet].filter(w => !STOPWORDS_IT.has(w)).slice(0, 20);
 
-  // HTML Reports
-  let reportsHtml = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">`;
+  // HTML Reports (Layout Migliorato a Griglia)
+  let reportsHtml = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">`;
   
   texts.forEach(t => {
     reportsHtml += `
-    <div style="background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm); color: var(--color-primary-light); font-size: var(--text-lg);">📜 Testo ${t.label}</h4>
-      <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-md);">
-        Parole: <strong>${t.tokens.length}</strong> | Uniche: <strong>${t.unique.size}</strong><br>
-        TTR: <strong>${t.ttr}</strong> | Lung. media: <strong>${t.avgLen}</strong>
-      </p>
-      <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-md); margin-top: var(--space-md);">
-        <h5 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-tertiary); margin-bottom: var(--space-sm);">☁️ Cirrus Word Cloud</h5>
-        <div style="text-align: center; line-height: 1.3; background: rgba(0,0,0,0.2); padding: var(--space-md); border-radius: var(--radius-md); min-height: 150px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
+    <div style="background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
+      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md); color: var(--color-primary-light); font-size: var(--text-lg); text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: var(--space-sm);">📜 Testo ${t.label}</h4>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); margin-bottom: var(--space-md);">
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Parole Totali</div>
+          <div style="font-size: var(--text-xl); font-weight: bold; color: var(--color-text-primary);">${t.tokens.length}</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Parole Uniche</div>
+          <div style="font-size: var(--text-xl); font-weight: bold; color: var(--color-text-primary);">${t.unique.size}</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Frasi</div>
+          <div style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text-primary);">${t.sentences}</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;" title="Parole che compaiono una sola volta">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Hapax Legomena</div>
+          <div style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text-primary);">${t.hapax}</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;" title="Type-Token Ratio: Ricchezza lessicale">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Ricchezza (TTR)</div>
+          <div style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text-primary);">${t.ttr}</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.2); padding: var(--space-sm); border-radius: var(--radius-sm); text-align: center;">
+          <div style="font-size: 0.7rem; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px;">Leggibilità</div>
+          <div style="font-size: 0.9rem; font-weight: bold; color: ${t.gulpColor}; margin-top: 4px;">${t.gulpLevel} <span style="opacity: 0.7; font-size: 0.8em;">(${t.gulpease})</span></div>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-md); flex-grow: 1; display: flex; flex-direction: column;">
+        <h5 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-tertiary); margin-bottom: var(--space-sm); text-align: center;">☁️ Cirrus Word Cloud</h5>
+        <div style="text-align: center; line-height: 1.3; background: rgba(0,0,0,0.2); padding: var(--space-md); border-radius: var(--radius-md); flex-grow: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
           ${t.cloudHtml || '<span style="color: var(--color-text-tertiary); font-size: var(--text-sm);">Testo insufficiente</span>'}
         </div>
       </div>
@@ -520,28 +565,31 @@ function compareTexts() {
   reportsHtml += `</div>`;
 
   results.innerHTML = `
-    <p class="lab-results-title">⚖️ Risultati del Confronto (${count} testi)</p>
+    <p class="lab-results-title">⚖️ Risultati del Confronto Avanzato (${count} testi)</p>
 
     <div style="text-align: center; margin: var(--space-xl) 0;">
-      <div style="font-size: var(--text-4xl); font-weight: 900; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+      <div style="font-size: 4.5rem; font-weight: 900; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;">
         ${(avgJaccard * 100).toFixed(1)}%
       </div>
-      <div style="font-size: var(--text-sm); color: var(--color-text-tertiary);">Similarità di Jaccard (Media)</div>
+      <div style="font-size: var(--text-md); color: var(--color-text-primary); font-weight: bold; margin-top: var(--space-xs);">Similarità di Jaccard (Media)</div>
       
-      <div style="margin-top: var(--space-md); font-size: 0.85rem; color: var(--color-text-secondary); max-width: 650px; margin-left: auto; margin-right: auto; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: rgba(139, 92, 246, 0.05); text-align: left; line-height: 1.5;">
+      <div style="margin-top: var(--space-md); font-size: 0.9rem; color: var(--color-text-secondary); max-width: 700px; margin-left: auto; margin-right: auto; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: rgba(139, 92, 246, 0.05); text-align: left; line-height: 1.5; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
         <strong>ℹ️ Cos'è questo valore?</strong><br>
         L'indice di Jaccard, noto anche come coefficiente di similarità di Jaccard (originariamente denominato <em>coefficient de communauté</em> da Paul Jaccard), è un indice statistico utilizzato per confrontare la similarità e la diversità di insiemi campionari. 
-        ${count > 2 ? 'In questo caso, viene mostrata la similarità media tra tutte le possibili coppie di testi analizzati.' : ''}
+        ${count > 2 ? 'In questo caso, viene calcolata ed esposta la <strong>similarità media</strong> tra tutte le possibili combinazioni di coppie dei testi forniti.' : ''}
       </div>
     </div>
 
     ${reportsHtml}
 
     ${sharedWords.length > 0 ? `
-    <div style="margin-bottom: var(--space-xl); background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
-      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">🤝 Vocabolario condiviso (presente in tutti i testi)</h4>
+    <div style="margin-bottom: var(--space-xl); background: var(--color-bg-glass); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md); display: flex; align-items: center; gap: 8px;">
+        🤝 Vocabolario Condiviso 
+        <span style="font-size: var(--text-xs); background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 12px; font-weight: normal; letter-spacing: 0;">Presente in tutti i testi</span>
+      </h4>
       <div style="display: flex; flex-wrap: wrap; gap: var(--space-xs);">
-        ${sharedWords.map(w => `<span class="resource-tag tool">${w}</span>`).join('')}
+        ${sharedWords.map(w => `<span class="resource-tag tool" style="font-size: var(--text-sm); padding: 4px 10px;">${w}</span>`).join('')}
       </div>
     </div>` : ''}
   `;
